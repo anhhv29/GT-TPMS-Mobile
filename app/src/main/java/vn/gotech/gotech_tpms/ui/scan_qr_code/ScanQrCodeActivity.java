@@ -40,15 +40,10 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
         lnBack = findViewById(R.id.ln_back_scan_qr);
 
-        lnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        lnBack.setOnClickListener(v -> finish());
     }
 
-    private BarcodeCallback callback = new BarcodeCallback() {
+    private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(final BarcodeResult result) {
             Toast.makeText(ScanQrCodeActivity.this, result.getResult().toString(), Toast.LENGTH_SHORT).show();
@@ -84,7 +79,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         capture.onSaveInstanceState(outState);
     }

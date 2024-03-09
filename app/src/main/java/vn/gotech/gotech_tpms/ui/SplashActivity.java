@@ -1,12 +1,13 @@
 package vn.gotech.gotech_tpms.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gotech_tpms.R;
@@ -14,7 +15,6 @@ import com.example.gotech_tpms.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import vn.gotech.gotech_tpms.base.response.CheckActiveResponse;
 import vn.gotech.gotech_tpms.base.response.CheckDetails;
 import vn.gotech.gotech_tpms.base.retrofit.ApiService;
 import vn.gotech.gotech_tpms.base.retrofit.RetrofitService;
@@ -22,10 +22,9 @@ import vn.gotech.gotech_tpms.ui.car_infor.CarInforActivity;
 import vn.gotech.gotech_tpms.ui.login.LoginActivity;
 import vn.gotech.gotech_tpms.ui.update_profile.UpdateProfileActivity;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
-
     SharedPreferences sharedPreferences;
-
     ApiService mService;
     String mbh;
 
@@ -40,10 +39,11 @@ public class SplashActivity extends AppCompatActivity {
         mService = RetrofitService.getAPIService();
 
         //Check sản phẩm kích hoạt
+/*
         if (!mbh.isEmpty()) {
             mService.checkActive("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", mbh).enqueue(new Callback<CheckActiveResponse>() {
                 @Override
-                public void onResponse(Call<CheckActiveResponse> call, Response<CheckActiveResponse> response) {
+                public void onResponse(@NonNull Call<CheckActiveResponse> call, @NonNull Response<CheckActiveResponse> response) {
                     if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                         if (response.body().getData().getProduct()) {
                             if (response.body().getData().getActive()) {
@@ -63,24 +63,23 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<CheckActiveResponse> call, Throwable t) {
+                public void onFailure(@NonNull Call<CheckActiveResponse> call, @NonNull Throwable t) {
                     Toast.makeText(SplashActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
-                    Log.e("CheckActive", t.getMessage());
+                    Log.e("CheckActive", Objects.requireNonNull(t.getMessage()));
                 }
             });
         } else {
             gotoLogin();
         }
+*/
+        gotoLogin();
     }
 
     private void gotoLogin() {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                finish();
-            }
+        handler.postDelayed(() -> {
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            finish();
         }, 1000);
     }
 
@@ -88,7 +87,7 @@ public class SplashActivity extends AppCompatActivity {
         //Check details
         mService.checkDetails("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", mbh).enqueue(new Callback<CheckDetails>() {
             @Override
-            public void onResponse(Call<CheckDetails> call, Response<CheckDetails> response) {
+            public void onResponse(@NonNull Call<CheckDetails> call, @NonNull Response<CheckDetails> response) {
                 if ((response.isSuccessful() && response.body() != null)) {
                     startActivity(new Intent(SplashActivity.this, CarInforActivity.class));
                     finish();
@@ -100,7 +99,7 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<CheckDetails> call, @NonNull Throwable t) {
                 Toast.makeText(SplashActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });

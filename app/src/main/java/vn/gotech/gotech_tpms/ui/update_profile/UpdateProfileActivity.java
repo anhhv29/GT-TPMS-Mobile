@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -27,7 +28,6 @@ import vn.gotech.gotech_tpms.base.retrofit.RetrofitService;
 import vn.gotech.gotech_tpms.ui.update_profile.ViewPager.FragmentUpdateProfileAdapter;
 
 public class UpdateProfileActivity extends AppCompatActivity {
-
     LinearLayout lnBack;
     ViewPager viewPager;
     FragmentManager fm;
@@ -49,20 +49,15 @@ public class UpdateProfileActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         lnBack = findViewById(R.id.ln_back);
         wormDotsIndicator = findViewById(R.id.worm_dots_indicator);
-        checkDetails();
+//        checkDetails();
 
-        lnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        lnBack.setOnClickListener(v -> finish());
     }
 
     private void checkDetails() {
         mService.checkDetails("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", mbh).enqueue(new Callback<CheckDetails>() {
             @Override
-            public void onResponse(Call<CheckDetails> call, Response<CheckDetails> response) {
+            public void onResponse(@NonNull Call<CheckDetails> call, @NonNull Response<CheckDetails> response) {
                 if ((response.isSuccessful() && response.body() != null)) {
                     String sodienthoai = response.body().getSodienthoai();
                     getPhone(sodienthoai);
@@ -72,7 +67,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<CheckDetails> call, @NonNull Throwable t) {
                 Toast.makeText(UpdateProfileActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });
@@ -81,7 +76,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     private void getPhone(String sodienthoai) {
         mService.getPhone("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", sodienthoai).enqueue(new Callback<GetPhoneResponse>() {
             @Override
-            public void onResponse(Call<GetPhoneResponse> call, Response<GetPhoneResponse> response) {
+            public void onResponse(@NonNull Call<GetPhoneResponse> call, @NonNull Response<GetPhoneResponse> response) {
                 if ((response.isSuccessful() && response.body() != null)) {
                     Object object = response.body();
                     Log.e("check getPhone", new Gson().toJson(object));
@@ -101,7 +96,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetPhoneResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetPhoneResponse> call, @NonNull Throwable t) {
                 Toast.makeText(UpdateProfileActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });

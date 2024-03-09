@@ -19,7 +19,6 @@
         <activity android:name="vn.gotech.gotech_tpms.ui.update_profile.UpdateProfileActivity" />
         <activity android:name="vn.gotech.gotech_tpms.ui.car_infor.CarInforActivity" />
         <activity android:name="vn.gotech.gotech_tpms.ui.confirm_qr_code.ConfirmQrCodeActivity" />
-<!--        <activity android:name=".ui.SplashActivity" />-->
         <activity android:name="vn.gotech.gotech_tpms.ui.login.LoginActivity" />
         <activity android:name="vn.gotech.gotech_tpms.ui.profile.ProfileActivity" />
         <activity android:name="vn.gotech.gotech_tpms.ui.scan_qr_code.ScanQrCodeActivity" />
@@ -27,8 +26,7 @@
         <activity android:name="vn.gotech.gotech_tpms.ui.active_product.ActiveProductActivity" />
         <activity
             android:name="vn.gotech.gotech_tpms.ui.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

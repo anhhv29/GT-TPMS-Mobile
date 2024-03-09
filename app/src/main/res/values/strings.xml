@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GOTECH_TPMS</string>
+    <string name="app_name">GT TPMS Demo</string>
     <string name="resend_otp"><u>GỬI LẠI MÃ</u></string>
     <string name="refuse"><u>Từ chối</u></string>
 </resources>

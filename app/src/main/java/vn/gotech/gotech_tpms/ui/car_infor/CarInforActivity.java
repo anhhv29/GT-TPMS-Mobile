@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -30,7 +31,6 @@ import vn.gotech.gotech_tpms.ui.profile.ProfileActivity;
 import vn.gotech.gotech_tpms.ui.update_profile.UpdateProfileActivity;
 
 public class CarInforActivity extends AppCompatActivity {
-
     ImageView imgUpdateProfile;
     ImageView imgProfile;
     ViewPager viewPagerCar;
@@ -54,27 +54,18 @@ public class CarInforActivity extends AppCompatActivity {
         fm = getSupportFragmentManager();
         wormDotsIndicator = findViewById(R.id.worm_dots_indicator);
 
-        imgProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CarInforActivity.this, ProfileActivity.class));
-            }
-        });
+        imgProfile.setOnClickListener(v -> startActivity(new Intent(CarInforActivity.this, ProfileActivity.class)));
 
-        imgUpdateProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CarInforActivity.this, UpdateProfileActivity.class));
-            }
-        });
+        imgUpdateProfile.setOnClickListener(v -> startActivity(new Intent(CarInforActivity.this, UpdateProfileActivity.class)));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        /*
         mService.checkDetails("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", mbh).enqueue(new Callback<CheckDetails>() {
             @Override
-            public void onResponse(Call<CheckDetails> call, Response<CheckDetails> response) {
+            public void onResponse(@NonNull Call<CheckDetails> call, @NonNull Response<CheckDetails> response) {
                 if ((response.isSuccessful() && response.body() != null)) {
                     String sodienthoai = response.body().getSodienthoai();
                     getPhone(sodienthoai);
@@ -84,16 +75,17 @@ public class CarInforActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<CheckDetails> call, @NonNull Throwable t) {
                 Toast.makeText(CarInforActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });
+        */
     }
 
     private void getPhone(String sodienthoai) {
         mService.getPhone("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", sodienthoai).enqueue(new Callback<GetPhoneResponse>() {
             @Override
-            public void onResponse(Call<GetPhoneResponse> call, Response<GetPhoneResponse> response) {
+            public void onResponse(@NonNull Call<GetPhoneResponse> call, @NonNull Response<GetPhoneResponse> response) {
                 if ((response.isSuccessful() && response.body() != null)) {
                     Object object = response.body();
                     Log.e("check getPhone", new Gson().toJson(object));
@@ -113,7 +105,7 @@ public class CarInforActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetPhoneResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetPhoneResponse> call, @NonNull Throwable t) {
                 Toast.makeText(CarInforActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });

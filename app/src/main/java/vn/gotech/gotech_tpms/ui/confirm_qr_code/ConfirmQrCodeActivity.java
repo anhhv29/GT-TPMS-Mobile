@@ -9,9 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gotech_tpms.R;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +28,6 @@ import vn.gotech.gotech_tpms.ui.car_infor.CarInforActivity;
 import vn.gotech.gotech_tpms.ui.update_profile.UpdateProfileActivity;
 
 public class ConfirmQrCodeActivity extends AppCompatActivity {
-
     Button btnLogin;
     TextView tvRefuse;
     ApiService mService;
@@ -42,15 +44,15 @@ public class ConfirmQrCodeActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("mbh", MODE_PRIVATE);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
-            Intent intent = getIntent();
-            String mbh = intent.getStringExtra("mbh");
+            final Intent intent = getIntent();
+            final String mbh = intent.getStringExtra("mbh");
 
             @Override
             public void onClick(View v) {
-                if (!mbh.isEmpty()) {
+                if (mbh != null && !mbh.isEmpty()) {
                     mService.checkActive("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", mbh).enqueue(new Callback<CheckActiveResponse>() {
                         @Override
-                        public void onResponse(Call<CheckActiveResponse> call, Response<CheckActiveResponse> response) {
+                        public void onResponse(@NonNull Call<CheckActiveResponse> call, @NonNull Response<CheckActiveResponse> response) {
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                                 if (response.body().getData().getProduct()) {
                                     if (response.body().getData().getActive()) {
@@ -75,29 +77,22 @@ public class ConfirmQrCodeActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<CheckActiveResponse> call, Throwable t) {
+                        public void onFailure(@NonNull Call<CheckActiveResponse> call, @NonNull Throwable t) {
                             Toast.makeText(ConfirmQrCodeActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
-                            Log.e("CheckActive", t.getMessage());
+                            Log.e("CheckActive", Objects.requireNonNull(t.getMessage()));
                         }
                     });
-                } else {
-                    Toast.makeText(ConfirmQrCodeActivity.this, "Vui lòng quét lại", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        tvRefuse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        tvRefuse.setOnClickListener(v -> finish());
     }
 
     private void checkDetails(String mbh) {
         mService.checkDetails("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", mbh).enqueue(new Callback<CheckDetails>() {
             @Override
-            public void onResponse(Call<CheckDetails> call, Response<CheckDetails> response) {
+            public void onResponse(@NonNull Call<CheckDetails> call, @NonNull Response<CheckDetails> response) {
                 if ((response.isSuccessful() && response.body() != null)) {
                     startActivity(new Intent(ConfirmQrCodeActivity.this, CarInforActivity.class));
                     finish();
@@ -110,7 +105,7 @@ public class ConfirmQrCodeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<CheckDetails> call, @NonNull Throwable t) {
                 Toast.makeText(ConfirmQrCodeActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });

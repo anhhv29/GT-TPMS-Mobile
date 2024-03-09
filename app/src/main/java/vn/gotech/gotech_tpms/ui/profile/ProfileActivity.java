@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,10 +53,11 @@ public class ProfileActivity extends AppCompatActivity {
         String mbh = sharedPreferences.getString("mbh", "");
         mService = RetrofitService.getAPIService();
         rvWarrantyInfor.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+/*
 
         mService.checkDetails("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", mbh).enqueue(new Callback<CheckDetails>() {
             @Override
-            public void onResponse(Call<CheckDetails> call, Response<CheckDetails> response) {
+            public void onResponse(@NonNull Call<CheckDetails> call, @NonNull Response<CheckDetails> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String sodienthoai = response.body().getSodienthoai();
                     getPhone(sodienthoai);
@@ -65,37 +67,31 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckDetails> call, Throwable t) {
+            public void onFailure(@NonNull Call<CheckDetails> call, @NonNull Throwable t) {
                 Toast.makeText(ProfileActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });
+*/
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("mbh","");
-                editor.apply();
-                finish();
-                finishAffinity();
-            }
+        btnLogout.setOnClickListener(v -> {
+            startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("mbh","");
+            editor.apply();
+            finish();
+            finishAffinity();
         });
 
-        lnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        lnBack.setOnClickListener(v -> finish());
     }
 
     private void getPhone(String sodienthoai) {
         mService.getPhone("eWncAaLetuqI2VEn7Q5WKEgCMy09HmUngt", sodienthoai).enqueue(new Callback<GetPhoneResponse>() {
             @Override
-            public void onResponse(Call<GetPhoneResponse> call, Response<GetPhoneResponse> response) {
+            public void onResponse(@NonNull Call<GetPhoneResponse> call, @NonNull Response<GetPhoneResponse> response) {
+                assert response.body() != null;
                 ArrayList<CheckDetails> data = response.body().getData();
-                if (data.size() > 0) {
+                if (!data.isEmpty()) {
                     tvName.setText(data.get(0).getTenkhachhang());
                     tvName1.setText(data.get(0).getTenkhachhang());
 //                    CheckDetails checkDetails = new CheckDetails();
@@ -113,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<GetPhoneResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<GetPhoneResponse> call, @NonNull Throwable t) {
                 Toast.makeText(ProfileActivity.this, "Không thể kết nối tới server", Toast.LENGTH_SHORT).show();
             }
         });
