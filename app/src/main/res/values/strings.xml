@@ -2,4 +2,5 @@
     <string name="app_name">GT TPMS Demo</string>
     <string name="resend_otp"><u>GỬI LẠI MÃ</u></string>
     <string name="refuse"><u>Từ chối</u></string>
+    <string name="nhap_ma_ap_suat_lop">Nhập mã áp suất lốp (*)</string>
 </resources>

@@ -55,25 +55,25 @@ public class LoginActivity extends AppCompatActivity {
 
                 //demo
                 switch (mbh) {
-                    case "case1": {
+                    case "1": {
                         Toast.makeText(LoginActivity.this, "Sản phẩm đã được kích hoạt", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, CarInforActivity.class));
                         finish();
                         break;
                     }
-                    case "case2": {
+                    case "2": {
                         Toast.makeText(LoginActivity.this, "Vui lòng cập nhật thông tin", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, UpdateProfileActivity.class));
                         break;
                     }
-                    case "case3": {
+                    case "3": {
                         Toast.makeText(LoginActivity.this, "Sản phẩm chưa được kích hoạt", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(LoginActivity.this, ActiveProductActivity.class);
                         intent.putExtra("mbh", mbh);
                         startActivity(intent);
                         break;
                     }
-                    case "case4": {
+                    case "4": {
                         Toast.makeText(LoginActivity.this, "Sản phẩm này không tồn tại", Toast.LENGTH_SHORT).show();
                         lnWarning.setVisibility(View.VISIBLE);
                         warning();

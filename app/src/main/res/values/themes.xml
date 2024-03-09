@@ -1,6 +1,8 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.GOTECH_TPMS" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
         <!--        full screen-->
         <!--        <item name="android:windowTranslucentStatus">true</item>-->
